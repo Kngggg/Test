@@ -1,0 +1,57 @@
+import React from 'react'
+import { useState } from 'react'
+import Cat from './Cat'
+import Navbar from '../Components/Navbar'
+import Footer from '../Components/Footer'
+import { useDispatch } from 'react-redux'
+import { incrementcart } from '../Sitt/CartReducer'
+
+const Category = () => {
+  const [data,setdata]=useState(Cat);
+  const filterresult=(cItem)=>{
+    const result=Cat.filter((currData)=>{
+      return currData.category === cItem;
+    });
+    setdata(result);
+  }
+
+  return (
+    <>
+    <Navbar/>
+    
+      <h5 className="text-left "> BROWSE CATEGORIES</h5>
+      <div className="container-fluid mx-2">
+        <div className="row mt-5 mx-2">
+          <div className="col-md-3">
+            <button className='btn btn-warning w-50 mb-2' onClick={()=>filterresult('men')}>Men</button><br></br>
+            <button className='btn btn-warning w-50 mb-2' onClick={()=>filterresult('women')}>Women</button><br></br>
+            <button className='btn btn-warning w-50 mb-2' onClick={()=>filterresult('mobile')} >Mobile</button><br>
+            </br>
+            <button className='btn btn-warning w-50 mb-2' onClick={()=>filterresult('laptop')}>Laptop</button><br></br>
+            <button className='btn btn-warning w-50 mb-2' onClick={()=>setdata(Cat)}>All</button>
+
+          </div>
+          <div className='col-md-9'>
+            <div className='row'>
+              {data.map((values)=>{
+                const {id,url,name,price,description}=values;
+                return(
+                  <>
+                                <div className='col-md-4 mb-4' key={id}>
+                <div className="card" >
+                  <img src={url} className="card-img-top" alt="..."/>
+                    <div className="card-body">
+                      <h5 className="card-title">{name}</h5>
+                      <p className="card-text">{description}</p>
+                      <h6>{price}</h6>
+                      <button className="btn btn-primary" >Buy</button>&nbsp;
+                      <button className='btn btn-primary' >AddtoCart</button> 
+                      
+                    </div>
+                    
+                </div>
+              </div>
+
+                  </>
+                )
+              })}
